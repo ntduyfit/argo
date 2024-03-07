@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sale-staging-deployment
+  labels:
+    app: sale-staging
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: sale-staging
+  template:
+    metadata:
+      labels:
+        app: sale-staging
+    spec:
+      containers:
+        - name: sale-staging
+          image: fumycr.azurecr.io/staging-fumy-sale:7d46d5f223e6b1d0d2705134bf3451748053d140
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 4300
+          resources:
+            limits:
+              memory: '1024Mi'
+          livenessProbe:
+            httpGet:
+              path: /sale/api/health-check
+              port: 4300
+            initialDelaySeconds: 5
+            periodSeconds: 30
+      imagePullSecrets:
+        - name: acrkey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sale-staging
+spec:
+  type: NodePort
+  selector:
+    app: sale-staging
+  ports:
+    - protocol: TCP
+      port: 4300
+      targetPort: 4300
+      nodePort: 31300
