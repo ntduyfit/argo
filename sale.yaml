@@ -14,10 +14,15 @@ spec:
     metadata:
       labels:
         app: sale-staging
+      annotations:
+        avp.kubernetes.io/path: "fumy/data/man-api-staging"
     spec:
       containers:
         - name: sale-staging
           image: fumycr.azurecr.io/staging-fumy-sale:de46700f4a2e1c1b16f0e788c80bd6da8bd8fbac
+          env:
+          - name: DEMO_GREETING
+            value: <DB_URL>
           imagePullPolicy: Always
           ports:
             - containerPort: 4300
