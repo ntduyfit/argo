@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: sale-staging
-          image: fumycr.azurecr.io/staging-fumy-sale:7d46d5f223e6b1d0d2705134bf3451748053d140
+          image: fumycr.azurecr.io/staging-fumy-sale:de46700f4a2e1c1b16f0e788c80bd6da8bd8fbac
           imagePullPolicy: Always
           ports:
             - containerPort: 4300
