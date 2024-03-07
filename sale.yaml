@@ -45,4 +45,4 @@ spec:
     - protocol: TCP
       port: 4300
       targetPort: 4300
-      nodePort: 31300
+      nodePort: 31600
