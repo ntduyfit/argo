@@ -17,13 +17,14 @@ spec:
       annotations:
         avp.kubernetes.io/path: "fumy/data/man-api-staging"
     spec:
+      serviceAccountName: fumy-sa
       containers:
         - name: sale-staging
           image: fumycr.azurecr.io/staging-fumy-sale:de46700f4a2e1c1b16f0e788c80bd6da8bd8fbac
           imagePullPolicy: Always
           env:
-            - name: DB_URL
-              value: <DB_URL>
+            - name: PASSWORD
+              value: <pasword>
           ports:
             - containerPort: 4300
           resources:
