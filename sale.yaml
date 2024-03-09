@@ -1,54 +1,9 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: sale-staging-deployment
-  labels:
-    app: sale-staging
-spec:
-  replicas: 1
-  revisionHistoryLimit: 2
-  selector:
-    matchLabels:
-      app: sale-staging
-  template:
-    metadata:
-      labels:
-        app: sale-staging
-      annotations:
-        avp.kubernetes.io/path: "fumy/data/man-api-staging"
-    spec:
-      serviceAccountName: fumy-ca
-      containers:
-        - name: sale-staging
-          image: fumycr.azurecr.io/staging-fumy-sale:de46700f4a2e1c1b16f0e788c80bd6da8bd8fbac
-          imagePullPolicy: Always
-          env:
-            - name: PASSWORD
-              value: <pasword>
-          ports:
-            - containerPort: 4300
-          resources:
-            limits:
-              memory: '1024Mi'
-          livenessProbe:
-            httpGet:
-              path: /sale/api/health-check
-              port: 4300
-            initialDelaySeconds: 5
-            periodSeconds: 30
-      imagePullSecrets:
-        - name: acrkey
----
 apiVersion: v1
-kind: Service
+kind: Secret
 metadata:
-  name: sale-staging
-spec:
-  type: NodePort
-  selector:
-    app: sale-staging
-  ports:
-    - protocol: TCP
-      port: 4300
-      targetPort: 4300
-      nodePort: 31600
+  name: example-secret
+  annotations:
+    avp.kubernetes.io/path: "fumy/data/man-api-staging" #path of secret in vault
+type: Opaque
+stringData:
+  sample-secret: <password> #Fomat should be like this with key
