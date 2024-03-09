@@ -17,6 +17,7 @@ spec:
       annotations:
         avp.kubernetes.io/path: "fumy/data/man-api-staging"
     spec:
+      serviceAccountName: fumy-ca
       containers:
         - name: sale-staging
           image: fumycr.azurecr.io/staging-fumy-sale:de46700f4a2e1c1b16f0e788c80bd6da8bd8fbac
